@@ -1,7 +1,6 @@
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, FeedbackOptionWrapper } from './feedbackOptions.styled';
-
 
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
@@ -13,4 +12,9 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
       ))}
     </FeedbackOptionWrapper>
   );
+};
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
 };

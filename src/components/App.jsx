@@ -5,32 +5,23 @@ import { Notification } from './notification/notification';
 import { Statistics } from './statistics/statistics';
 
 export const App = () => {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  });
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
   const handleFeedback = option => {
-    setFeedback(prevFeedback => ({
-      ...prevFeedback,
-      [option]: prevFeedback[option] + 1,
-    }));
+    if (option === 'good') {
+      setGood(prevGood => prevGood + 1);
+    } else if (option === 'neutral') {
+      setNeutral(prevNeutral => prevNeutral + 1);
+    } else if (option === 'bad') {
+      setBad(prevBad => prevBad + 1);
+    }
   };
 
-  const countTotalFeedback = () => {
-    const { good, neutral, bad } = feedback;
-    return good + neutral + bad;
-  };
+  const totalFeedback = good + neutral + bad;
 
-  const countPositiveFeedbackPercentage = () => {
-    const { good } = feedback;
-    const totalFeedback = countTotalFeedback();
-    return Math.round((good / totalFeedback) * 100) || 0;
-  };
-
-  const totalFeedback = countTotalFeedback();
-  const positivePercentage = countPositiveFeedbackPercentage();
+  const positivePercentage = Math.round((good / totalFeedback) * 100) || 0;
 
   const options = ['good', 'neutral', 'bad'];
 
@@ -41,7 +32,7 @@ export const App = () => {
       </Section>
       {totalFeedback > 0 ? (
         <Statistics
-          feedback={feedback}
+          feedback={{ good, neutral, bad }}
           total={totalFeedback}
           positivePercentage={positivePercentage}
         />
@@ -51,3 +42,5 @@ export const App = () => {
     </>
   );
 };
+
+
